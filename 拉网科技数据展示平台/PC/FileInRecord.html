@@ -1,0 +1,173 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" href="lib/layui/css/layui.css"  media="all">
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>数据导入记录列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 数据导入 <span class="c-gray en">&gt;</span> 数据导入信息列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;"  id="downmodel" class="btn btn-danger radius">下载模板</a> 
+        <button type="button" class="layui-btn" id="filein">
+                <i class="layui-icon">&#xe67c;</i>选择文件导入
+                </button>
+       </span> <span class="r">共有数据：<strong id="listcount">0</strong> 条</span>
+
+	</div>
+	<table class="table table-border table-bordered table-bg table-sort"  id="tableinfo">
+		<thead>
+			<tr>
+				<th scope="col" colspan="11">交易数据列表</th>
+			</tr>
+			<tr class="text-c">
+				<th width="40">ID</th>
+				<th width="90">文件名(点击下载)</th>
+				<th width="100">导入时间</th>
+				<th width="80">数据条数</th>
+			</tr>
+		</thead>
+		<tbody id="tobodyInfoid">
+			
+		</tbody>
+	</table>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="lib/layui/layui.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        ShowAll();
+        $('.table-sort').dataTable({
+            "aaSorting": [[1, "desc"]],//默认第几个排序
+            "aLengthMenu": [10, 30, 50, 100], //更改显示记录数选项         
+            "iDisplayLength": 10, //默认显示的记录数
+            "oLanguage": {
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "抱歉， 没有找到",
+                "sInfo": "本页：从 _START_ 到 _END_ /共计 _TOTAL_ 条数据",
+                "sInfoEmpty": "没有数据",
+                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "尾页"
+                },
+                "sZeroRecords": "没有检索到数据",
+            }
+        });
+    });
+
+    //
+    $('#downmodel').click(function () {
+        $.ajax({
+            type: "post",
+            url: '../Ashx/FileRecordInfo.ashx?action=getFileModel',
+            success: function (data) {
+                if (data != "error") {
+                    window.open(data);
+                }
+            },
+            error: function (data) {
+               
+            }
+        });
+        
+    });
+
+        function ShowAll() {
+
+            //这里注意在ajaxx请求里面不要用window.document.getElementById等类似
+            var tbody = window.document.getElementById("tobodyInfoid");
+            var sumdata = window.document.getElementById("listcount");
+
+            $.ajax({
+                type: "post",
+                url: '../Ashx/FileRecordInfo.ashx?action=getinlist',
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    var str = "";
+                    //这里&quot就代表"双引号
+                    for (var i = 0; i < data.Count[0].total; i++) {
+                        str += "<tr class='text-c'>" +
+                            "<td>" + data.Minfo[i].ID + "</td>" +
+                            "<td><a href='" + data.Minfo[i].Url + "'>" + data.Minfo[i].FileName + "</a></td>" +
+                            "<td>" + data.Minfo[i].FileTimestr + "</td>" +
+                            "<td>" + data.Minfo[i].Count + "</td>";
+                        str += "</tr>";
+                    }
+                    tbody.innerHTML = str;
+                    sumdata.innerText = data.Count[0].total.toString();
+                },
+
+                error: function () {
+                    tbody.innerHTML = "";
+                    sumdata.innerText = "0";
+                }
+
+            });
+        }
+
+
+
+        layui.use('upload', function () {
+            var upload = layui.upload;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#filein' //绑定元素
+              , url: '../Ashx/FileRecordInfo.ashx?action=fileinput' //上传接口
+              , done: function (res) {
+                  //上传完毕回调
+                  layer.open({
+                      title: '导入成功'
+                   , content: res.msg
+                  });
+
+              }
+              , error: function () {
+                  //请求异常回调
+              }
+              , accept: 'file'
+              , acceptMime: 'image/xls'
+              , size: 1000 //最大允许上传的文件大小
+              , exts: 'xls'  //只许上传xls
+            });
+        });
+
+   
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>我的桌面</title>
+</head>
+<body>
+<div class="page-container">
+	<p class="f-20 text-success">欢迎登录拉网科技交易数据展示平台 <span class="f-14">v1.0</span></p>
+	
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th colspan="7" scope="col">信息统计</th>
+			</tr>
+			<tr class="text-c">
+				<th>昨日成交额</th>
+				<th>近七天成交额</th>
+				<th>近一个月成交额</th>
+				<th>近一年成交额</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c">
+				<td><span id="daysum">0</span> 元</td>
+				<td><span id="weeksum">0</span> 元</td>
+				<td><span id="monthsum">0</span> 元</td>
+				<td><span id="yearsum">0</span> 元</td>
+				
+			</tr>
+			
+		</tbody>
+	</table>
+	
+</div>
+<footer class="footer mt-20">
+	<div class="container">
+		<p>
+			Copyright &copy;2018 南京拉网集团交易数据统计中心 v1.0 <a href="http://www.miitbeian.gov.cn" target="_blank">苏ICP备18054102号</a><br>
+			本后台系统由<a href="http://www.54drt.com/" target="_blank" >梦雨网络</a>提供技术支持</p>
+	</div>
+</footer>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+
+
+    <script type="text/javascript">
+        $(function () {
+            getdaysum();
+            getweeksum();
+            getmonthsum();
+            getyearsum();
+        })
+
+        function getdaysum() {
+            var sum = window.document.getElementById("daysum");
+            $.ajax({
+                type: "post",
+                url: '../Ashx/mpMainDataList.ashx?action=getsum',
+                data: {  type: "1" },
+                async: false,
+                success: function (data) {
+                    sum.innerText = data;
+                },
+
+                error: function () {
+                    sum.innerText = "请求出错！";
+                }
+
+            });
+
+        }
+
+        function getweeksum() {
+            var sum = window.document.getElementById("weeksum");
+            $.ajax({
+                type: "post",
+                url: '../Ashx/mpMainDataList.ashx?action=getsum',
+                data: { type: "2" },
+                async: false,
+                success: function (data) {
+                    sum.innerText = data;
+                },
+
+                error: function () {
+                    sum.innerText = "请求出错！";
+                }
+
+            });
+
+        }
+
+        function getmonthsum() {
+            var sum = window.document.getElementById("monthsum");
+            $.ajax({
+                type: "post",
+                url: '../Ashx/mpMainDataList.ashx?action=getsum',
+                data: { type: "3" },
+                async: false,
+                success: function (data) {
+                    sum.innerText = data;
+                },
+
+                error: function () {
+                    sum.innerText = "请求出错！";
+                }
+
+            });
+
+        }
+
+
+
+        function getyearsum() {
+            var sum = window.document.getElementById("yearsum");
+            $.ajax({
+                type: "post",
+                url: '../Ashx/mpMainDataList.ashx?action=getsum',
+                data: { type: "4" },
+                async: false,
+                success: function (data) {
+                    sum.innerText = data;
+                },
+
+                error: function () {
+                    sum.innerText = "请求出错！";
+                }
+
+            });
+
+        }
+
+
+
+    </script>
+</body>
+</html>

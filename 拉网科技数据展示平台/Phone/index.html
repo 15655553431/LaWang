@@ -1,0 +1,533 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>拉网科技交易数据展示中心</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" type="text/css" href="css/cloud-admin.css" >
+	<link rel="stylesheet" type="text/css"  href="css/themes/default.css" id="skin-switcher" >
+	<link rel="stylesheet" type="text/css"  href="css/responsive.css" >
+	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<!-- ANIMATE -->
+	<link rel="stylesheet" type="text/css" href="css/animatecss/animate.min.css" />
+	<!-- DATE RANGE PICKER -->
+	<link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+	<!-- TODO -->
+	<link rel="stylesheet" type="text/css" href="js/jquery-todo/css/styles.css" />
+	<!-- FULL CALENDAR -->
+	<link rel="stylesheet" type="text/css" href="js/fullcalendar/fullcalendar.min.css" />
+	<!-- GRITTER -->
+	<link rel="stylesheet" type="text/css" href="js/gritter/css/jquery.gritter.css" />
+	<!-- FONTS -->
+	<link href='#css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<!-- HEADER -->
+	<header class="navbar clearfix" id="header">
+		<div class="container">
+				<div class="navbar-brand">
+					<!-- COMPANY LOGO -->
+					<a href="index.html">
+						<img src="img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+					</a>
+					<!-- /COMPANY LOGO -->
+
+					<!-- SIDEBAR COLLAPSE -->
+					<div id="sidebar-collapse" class="sidebar-collapse btn">
+						<i class="fa fa-bars" 
+							data-icon1="fa fa-bars" 
+							data-icon2="fa fa-bars" ></i>
+					</div>
+					<!-- /SIDEBAR COLLAPSE -->
+				</div>
+				<!-- NAVBAR LEFT -->
+				<ul class="nav navbar-nav pull-left hidden-xs" id="navbar-left">
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-cog"></i>
+							<span class="name">皮肤</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu skins">
+							<li class="dropdown-title">
+								<span><i class="fa fa-leaf"></i> 选择类型</span>
+							</li>
+							<li><a href="#" data-skin="default">浅蓝色</a></li>
+							<li><a href="#" data-skin="night">深色的</a></li>
+							<li><a href="#" data-skin="earth">灰土色</a></li>
+							<li><a href="#" data-skin="utopia">乌托邦</a></li>
+							<li><a href="#" data-skin="nature">浅灰色</a></li>
+							<li><a href="#" data-skin="graphite">石墨黑</a></li>
+						 </ul>
+					</li>
+				</ul>
+				<!-- /NAVBAR LEFT -->
+				<!-- BEGIN TOP NAVIGATION MENU -->					
+				<ul class="nav navbar-nav pull-right">
+					
+					<li class="dropdown user" id="header-user">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" src="img/avatars/avatar3.jpg" />
+							<span class="username" id="adminname">管理员</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu">
+							
+							<li><a onclick="Exit();"><i class="fa fa-power-off"></i>退出登陆</a></li>
+						</ul>
+					</li>
+					<!-- END USER LOGIN DROPDOWN -->
+				</ul>
+				<!-- END TOP NAVIGATION MENU -->
+		</div>
+		
+	</header>
+
+	<!--/HEADER -->
+	
+	<!-- PAGE -->
+	<section id="page">
+				<!-- SIDEBAR -->
+				<div id="sidebar" class="sidebar">
+					<div class="sidebar-menu nav-collapse">
+						<div class="divide-20"></div>
+						<!-- SEARCH BAR -->
+
+						<!-- /SEARCH BAR -->
+
+						<!-- SIDEBAR MENU -->
+						<ul>
+							<li  class="active">
+								<a href="index.html">
+								<i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">首页</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+                            <li>
+								<a href="DayData.html">
+								<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">日数据统计</span>
+								<span class="selected"></span>
+								</a>					
+							</li>
+
+                            <li>
+                                <a href="WeekData.html">
+                                    <i class="fa fa-columns fa-fw"></i> <span class="menu-text">周数据统计</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="MonthData.html">
+                                    <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">月数据统计</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="YearData.html">
+                                    <i class="fa fa-calendar fa-fw"></i> <span class="menu-text">年数据统计</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="DataStatistics.html">
+                                    <i class="fa fa-desktop fa-fw"></i> <span class="menu-text">数据自主统计</span>
+                                </a>
+                            </li>
+
+                            <li class="has-sub">
+								<a href="javascript:;" >
+								<i class="fa fa-bar-chart-o fa-fw"></i> <span class="menu-text">数据对比分析</span>
+								<span class="arrow"></span>
+								</a>
+								<ul class="sub">
+									<li><a href="DataAnalyze.html"><span class="sub-menu-text">同比分析</span></a></li>
+									<li><a href="DataAnalyzeLoop.html"><span class="sub-menu-text">环比分析</span></a></li>
+								</ul>
+							</li>
+
+                            <li>
+                                <a href="YesterdayData.html">
+                                    <i class="fa fa-th-large fa-fw"></i> <span class="menu-text">昨日收单排行</span>
+                                </a>
+                            </li>
+
+						</ul>
+						<!-- /SIDEBAR MENU -->
+					</div>
+				</div>
+				<!-- /SIDEBAR -->
+		<div id="main-content">
+			<div class="container">
+				<div class="row">
+					<div id="content" class="col-lg-12">
+						<!-- PAGE HEADER-->
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="page-header">
+									<!-- STYLER -->
+									
+									<!-- /STYLER -->
+									<!-- BREADCRUMBS -->
+									<ul class="breadcrumb">
+										<li>
+											<i class="fa fa-home"></i>
+											<a href="index.html">首页</a>
+										</li>
+										<li>拉网科技数据展示中心</li>
+									</ul>
+									<!-- /BREADCRUMBS -->
+									<div class="clearfix">
+										<h3 class="content-title pull-left">欢迎访问拉网科技</h3>
+										<!-- DATE RANGE PICKER -->
+										
+										<!-- /DATE RANGE PICKER -->
+									</div>
+									<div class="description">您可以查看拉网科技收款统计信息</div>
+								</div>
+							</div>
+						</div>
+						<!-- /PAGE HEADER -->
+						<!-- DASHBOARD CONTENT -->
+						<div class="row">
+							<!-- COLUMN 1 -->
+							<div class="col-md-6">
+                                <div class="row">
+									<div class="col-md-12">
+										<div class="quick-pie panel panel-default">
+											<div class="panel-body" style="font-size:20px;">
+												<span>2018年交易额：￥</span>
+                                                <span id="summoney" style="color:red;">未获得数据</span>
+											</div>
+										</div>
+									</div>
+							   </div>
+
+								<div class="row">
+								  <div class="col-lg-6">
+									 <div class="dashbox panel panel-default" onclick="window.location='DayData.html'">
+										<div class="panel-body">
+										   <div class="panel-left red">
+												<i class="fa  fa-3x">日</i>
+										   </div>
+										   <div class="panel-right">
+												<div class="number">日统计</div>
+												<div class="title">点击进入</div>
+
+										   </div>
+										</div>
+									 </div>
+								  </div>
+								  <div class="col-lg-6">
+									 <div class="dashbox panel panel-default" onclick="window.location='WeekData.html'">
+										<div class="panel-body">
+										   <div class="panel-left blue">
+												<i class="fa  fa-3x">周</i>
+										   </div>
+										   <div class="panel-right">
+												<div class="number">周统计</div>
+												<div class="title">7天数据</div>
+												
+										   </div>
+										</div>
+									 </div>
+								  </div>
+								</div>
+
+                                <div class="row">
+								  <div class="col-lg-6">
+									 <div class="dashbox panel panel-default" onclick="window.location='MonthData.html'">
+										<div class="panel-body">
+										   <div class="panel-left red">
+												<i class="fa  fa-3x">月</i>
+										   </div>
+										   <div class="panel-right">
+												<div class="number">月统计</div>
+												<div class="title">点击进入</div>
+
+										   </div>
+										</div>
+									 </div>
+								  </div>
+								  <div class="col-lg-6">
+									 <div class="dashbox panel panel-default" onclick="window.location='YearData.html'">
+										<div class="panel-body">
+										   <div class="panel-left blue">
+												<i class="fa  fa-3x">年</i>
+										   </div>
+										   <div class="panel-right">
+												<div class="number">年统计</div>
+												<div class="title">点击进入</div>
+												
+										   </div>
+										</div>
+									 </div>
+								  </div>
+								</div>
+
+							</div>
+							<!-- /COLUMN 1 -->
+							
+							<!-- COLUMN 2 -->
+							<div class="col-md-6">
+								<div class="box solid grey">
+									<div class="box-title">
+										<h4><i class="fa fa-dollar"></i><span id="yearspan">2018</span>年月交易额(单位:￥亿元)</h4>
+										<div class="tools">
+
+											<a href="javascript:;" class="remove">
+												<i class="fa fa-times"></i>
+											</a>
+										</div>
+									</div>
+									<div class="box-body">
+										<div id="chart-revenue" style="height:240px"></div>
+									</div>
+								</div>
+							</div>
+							<!-- /COLUMN 2 -->
+						</div>
+
+                        <div class="row">
+
+                        </div>
+
+					   <!-- /DASHBOARD CONTENT -->
+					   
+					</div><!-- /CONTENT-->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/PAGE -->
+	<!-- JAVASCRIPTS -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- JQUERY -->
+	<script src="js/jquery/jquery-2.0.3.min.js"></script>
+	<!-- JQUERY UI-->
+	<script src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<!-- BOOTSTRAP -->
+	<script src="bootstrap-dist/js/bootstrap.min.js"></script>
+	
+		
+	<!-- DATE RANGE PICKER -->
+	<script src="js/bootstrap-daterangepicker/moment.min.js"></script>
+	
+	<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+	<!-- SLIMSCROLL -->
+	<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
+	<!-- SLIMSCROLL -->
+	<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
+	<!-- BLOCK UI -->
+	<script type="text/javascript" src="js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
+	<!-- SPARKLINES -->
+	<script type="text/javascript" src="js/sparklines/jquery.sparkline.min.js"></script>
+	<!-- EASY PIE CHART -->
+	<script src="js/jquery-easing/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="js/easypiechart/jquery.easypiechart.min.js"></script>
+	<!-- FLOT CHARTS -->
+	<script src="js/flot/jquery.flot.min.js"></script>
+	<script src="js/flot/jquery.flot.time.min.js"></script>
+    <script src="js/flot/jquery.flot.selection.min.js"></script>
+	<script src="js/flot/jquery.flot.resize.min.js"></script>
+    <script src="js/flot/jquery.flot.pie.min.js"></script>
+    <script src="js/flot/jquery.flot.stack.min.js"></script>
+    <script src="js/flot/jquery.flot.crosshair.min.js"></script>
+	<!-- TODO -->
+	<script type="text/javascript" src="js/jquery-todo/js/paddystodolist.js"></script>
+	<!-- TIMEAGO -->
+	<script type="text/javascript" src="js/timeago/jquery.timeago.min.js"></script>
+	<!-- FULL CALENDAR -->
+	<script type="text/javascript" src="js/fullcalendar/fullcalendar.min.js"></script>
+	<!-- COOKIE -->
+	<script type="text/javascript" src="js/jQuery-Cookie/jquery.cookie.min.js"></script>
+	<!-- GRITTER -->
+	<script type="text/javascript" src="js/gritter/js/jquery.gritter.min.js"></script>
+	<!-- CUSTOM SCRIPT -->
+    <script src="js/script.js"></script>
+
+
+    <script type="text/javascript">
+
+        function getsum() {
+            var sum = window.document.getElementById("summoney");
+            $.ajax({
+                type: "post",
+                url: '../Ashx/mpMainDataList.ashx?action=get2018sum',
+                success: function (data) {
+                    sum.innerText = data;
+                },
+
+                error: function () {
+                    sum.innerText = "请求出错！";
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+	<script>
+	    jQuery(document).ready(function () {
+	        checksession();
+	        getsum();
+	        chart_revenue();
+			//App.setPage("index");  //Set current page
+			App.init(); //Initialise plugins and elements
+		});
+
+
+	    function chart_revenue() {
+
+	        var likes = new Array();
+	        
+	        var yearspanstr = window.document.getElementById("yearspan");
+	        var date = new Date;
+	        var year = date.getFullYear();
+
+	        yearspanstr.innerText = year.toString();
+
+	        $.ajax({
+	            type: "post",
+	            url: '../Ashx/mpMainDataList.ashx?action=getmonthbyyear',
+	            data: { year: year.toString() },
+	            async: false,
+	            success: function (data) {
+	                var arr1 = data.split(";");
+	                for (var i = 0; i < arr1.length; i++) {	  
+	                    var arr2 = arr1[i].split(",");
+
+	                    likes[i] = new Array();
+
+	                    for (var j = 0; j < arr2.length; j++) {
+	                        if (j > 0) {
+	                            likes[i][j] = parseInt(arr2[j]) / 100000000;
+	                        }
+	                        else {
+	                            likes[i][j] = parseInt(arr2[j]);
+	                        }
+	                    }
+	                }
+
+
+	                
+	            },
+
+	            error: function () {
+	                yearspanstr.innerText = "请求出错！";
+	            }
+
+	        });
+
+	       
+
+	        var chartColor = $(this).parent().parent().css("color");
+
+	        var plot = $.plot($("#chart-revenue"),
+				   [{ data: likes }], {
+				       series: {
+				           label: "Revenue",
+				           lines: {
+				               show: true,
+				               lineWidth: 3,
+				               fill: false
+				           },
+				           points: {
+				               show: true,
+				               lineWidth: 3,
+				               fill: true,
+				               fillColor: chartColor
+				           },
+				           shadowSize: 0
+				       },
+				       grid: {
+				           hoverable: true,
+				           clickable: true,
+				           tickColor: "rgba(255,255,255,.15)",
+				           borderColor: "rgba(255,255,255,0)"
+				       },
+				       colors: ["#fff"],
+				       xaxis: {
+				           font: {
+				               color: "#fff"
+				           },
+				           ticks: 6,
+				           tickDecimals: 0,
+				           tickColor: chartColor,
+				       },
+				       yaxis: {
+				           font: {
+				               color: "#fff"
+				           },
+				           ticks: 4,
+				           tickDecimals: 0,
+				           autoscaleMargin: 0.000001
+				       },
+				       legend: {
+				           show: false
+				       }
+				   });
+	    }
+
+
+		 function checksession() {
+		    var adminname = window.document.getElementById("adminname");
+		    // 这里就是向后台请求Session 对象中的用户是否存在，如果存在继续打开，如果不存在直接跳转到登录界面
+		    $.ajax({
+		        type: "post",
+		        url: '../Ashx/index.ashx?action=login',
+		        data: { rlogin: "true" },
+		        //async: false,
+		        success: function (data) {
+		            if (data == "false") {
+		                window.location.href = 'login.html';
+		            }
+		            else {
+		                var datatemp = data.split(',');
+
+		                if (datatemp[0] == "1") {
+		                    adminname.innerText = datatemp[1];
+		                }
+
+		            }
+
+		        },
+		        error: function () {
+		            window.location.href = 'login.html';
+		        }
+		    });
+		}
+
+
+
+		//退出登录
+		function Exit() {
+		    //1、清除cookie信息
+		    //2、清除session信息
+		    //3、返回登录界面
+
+		    //delAllCookie();//删除所有cookie变量 这种方案不行获取不到登陆页的cookies
+
+		    $.ajax({
+		        type: "post",
+		        url: '../Ashx/index.ashx?action=exitlogin',
+		        data: { clearcs: "true" },
+		        success: function (data) {
+		            window.location.href = 'login.html';
+		        },
+		        error: function () {
+		            window.location.href = 'login.html';
+		        }
+		    });
+		}
+
+
+	</script>
+	<!-- /JAVASCRIPTS -->
+</body>
+</html>

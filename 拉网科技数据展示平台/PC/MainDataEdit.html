@@ -1,0 +1,235 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->   
+<title>商户添加修改</title>
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-admin-add">
+
+        <div class="row cl" id="idinfo">
+
+	    </div>
+	    <div class="row cl">
+		    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>POS商户：</label>
+		    <div class="formControls col-xs-8 col-sm-9">
+                <select id="posname" class="select" style="width:200px;" onchange="LoadRearName();">
+
+                </select>
+			    
+		    </div>
+	    </div>
+        <div class="row cl">
+		    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>商户后台：</label>
+		    <div class="formControls col-xs-8 col-sm-9">
+			    <select id="rearname" class="select"  style="width:200px;" name="rearname">
+
+                </select>
+		    </div>
+	    </div>
+        <div class="row cl">
+		    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>记录时间：</label>
+		    <div class="formControls col-xs-8 col-sm-9">
+			    <input type="text" name="dateinput"  id="dateinput" onfocus="WdatePicker({ maxDate:'%y-%M-%d' })" class="input-text Wdate" style="width:200px;" >
+		    </div>
+	    </div>
+
+        <div class="row cl">
+		    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>成交金额：</label>
+		    <div class="formControls col-xs-8 col-sm-9">
+			    <input type="text" class="input-text" placeholder="成交金额" id="money" name="money" style="width:200px;">
+		    </div>
+	    </div>
+        
+	     <br>
+	
+	    <div class="row cl">
+		    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		    </div>
+	    </div>
+	</form>
+</article>
+
+<!--_footer 作为公共模版分离出去--> 
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+
+
+
+    <script type="text/javascript">
+
+        $(function () {
+            LoadName();
+            LoadRearName();
+            edit();
+        })
+
+
+        function LoadName() {
+            var posnameselect = window.document.getElementById("posname");
+
+            $.ajax({
+                type: "post",
+                url: '../Ashx/MainDataList.ashx?action=getposname',
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    posnameselect.options.length = 0;
+                    for (var i = 0; i < data.Count[0].total; i++) {
+                        posnameselect.options.add(new Option(data.Minfo[i].Name, data.Minfo[i].ID));
+                    }
+
+                },
+                error: function () {
+                    
+                }
+            });
+
+
+        }
+
+        function LoadRearName() {
+            var rearnameselect = window.document.getElementById("rearname");
+            var posid = window.document.getElementById("posname").value;
+            $.ajax({
+                type: "post",
+                url: '../Ashx/MainDataList.ashx?action=getrearname',
+                data: { posid: posid },
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    rearnameselect.options.length = 0;
+                    for (var i = 0; i < data.Count[0].total; i++) {
+                        rearnameselect.options.add(new Option(data.Minfo[i].Name, data.Minfo[i].ID));
+                    }
+
+                },
+                error: function () {
+                    rearnameselect.options.length = 0;
+                }
+            });
+
+        }
+
+
+
+        function edit() {
+            var editidurl = window.location.href;
+            var data = editidurl.split("=");
+            var id = data[1];
+            if (id != null) {
+                var idinfodiv = window.document.getElementById("idinfo");
+                var str = "";
+                str = "<label class='form-label col-xs-4 col-sm-3'><span class='c-red'></span>记录ID：</label>" +
+                        "<div class='formControls col-xs-8 col-sm-9'>" +
+                        "<input type=\"text\" class='input-text' readonly=\"true\" value='" + id + "' id=\"userid\" name=\"userid\" style='width:200px;'>" +
+                        "</div>";
+                idinfodiv.innerHTML = str;
+
+                var posnameselete = window.document.getElementById("posname");
+                var rearnameselete = window.document.getElementById("rearname");
+
+                $.ajax({
+                    type: "post",
+                    url: '../Ashx/MainDataList.ashx?action=getbyid',
+                    data: { sreachid: id },
+                    //async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        rearnameselete.options.length = 0;
+                        rearnameselete.options.add(new Option(data.Minfo[0].MRName, data.Minfo[0].FKID));
+                        posnameselete.value = data.Minfo[0].MID;
+                        var datestr = data.Minfo[0].Datestr;
+                        datestr = datestr.replace(/\//g, '-');//正则表达式解决时间显示格式错误问题
+                        window.document.getElementById("dateinput").value = datestr;
+                        window.document.getElementById("money").value = data.Minfo[0].Money;
+
+                    },
+                    error: function () {
+                        window.location.href = 'index.html';
+                    }
+                });
+
+            }
+        }
+
+   </script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-admin-add").validate({
+            rules: {
+                money: {
+                    required: true,
+                    number: true,
+                    minlength: 1,
+                    maxlength: 17,
+                },
+                dateinput:{
+                    required: true,
+                },
+                rearname: {
+                    required: true,
+                }
+                
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: '../Ashx/MainDataList.ashx?action=save',
+                    success: function (data) {
+                        if (data == "addtrue") {
+                            layer.msg('添加成功!需要刷新显示！', { icon: 1, time: 1000 });
+                        }
+                        else if (data == "updatetrue") {
+                            layer.msg('修改成功!', { icon: 1, time: 1000 });
+                        }
+                    },
+                    error: function (XmlHttpRequest, textStatus, errorThrown) {
+                        layer.msg('错误！请检查输入！', { icon: 1, time: 1000 });
+                    }
+                });
+               
+            }
+        });
+    });
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
